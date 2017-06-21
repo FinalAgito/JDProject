@@ -249,12 +249,8 @@ float HU::MatchingFFT(void *data1, void *data2)
 
 int &  HU::ExcuteHog(Mat img, void * param, vector<float>&descriptors)
 {
-	 Mat trainImg;
-	 
-	 
+	 Mat trainImg;	 
 	 cvtColor(img,trainImg,CV_BGR2GRAY);
-	 
-	
 
       HOGDescriptor *hog = new HOGDescriptor(Size(3,3),Size(3,3),Size(5,10),Size(3,3),9); 
 	  hog->gammaCorrection = true;//gamma校正
@@ -263,31 +259,24 @@ int &  HU::ExcuteHog(Mat img, void * param, vector<float>&descriptors)
   int desc_length = descriptors.size();
  
 	  memcpy(param,&descriptors,sizeof(descriptors));
-	 
 
-   
-	  
 	int length = sizeof(descriptors);
-	
+	 delete hog;
+	hog = NULL;
 	return length;
 
 	
 }
 void HU::ExcuteHog2(Mat img, vector<float>&descriptors)
 {
-	 Mat trainImg;
-	 
-	 
+	 Mat trainImg; 
 	 cvtColor(img,trainImg,CV_BGR2GRAY);
-	 
-	
-
-     HOGDescriptor *hog = new HOGDescriptor(Size(3,3),Size(3,3),Size(5,10),Size(3,3),9); 
-	  hog->gammaCorrection = true;//gamma校正
-	 
-  hog->compute(trainImg,descriptors,Size(1,1), Size(0,0)); //调用计算函数开始计算
+        HOGDescriptor *hog = new HOGDescriptor(Size(3,3),Size(3,3),Size(5,10),Size(3,3),9); 
+	  hog->gammaCorrection = true;//gamma校正 
+         hog->compute(trainImg,descriptors,Size(1,1), Size(0,0)); //调用计算函数开始计算
  
- 
+      delete hog;
+	hog = NULL;
 	
 }
 float HU::CalDiffHog(void *data1, void *data2)
